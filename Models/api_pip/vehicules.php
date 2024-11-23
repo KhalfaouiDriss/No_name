@@ -1,12 +1,11 @@
 <?php
-include '../../Config/config.php';
 
 $vehicules_query = "SELECT * FROM vehicules";
 
-$result = mysqli_query($conn,$vehicules_query);
-$row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$vehicules_queryresult = mysqli_query($conn,$vehicules_query);
+$vehicules_row = mysqli_fetch_all($vehicules_queryresult, MYSQLI_ASSOC);
 
-echo "<pre>";
-echo json_encode($row);
-echo "</pre>";
+// echo "<pre>";
+// echo json_encode($vehicules_row);
+// echo "</pre>";
 ?>

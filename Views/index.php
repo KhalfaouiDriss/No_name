@@ -2,7 +2,13 @@
 <html lang="en">
 
 <head>
-    <?php include "components/header.html"; ?>
+    <?php include "components/header.php"; ?>
+    <?php
+    include '../Config/config.php';
+
+    // include_once '../../Models/api_pip/api.php' 
+    ?>
+
     <style>
         /* Common styles for progress container */
         .progress-container {
@@ -197,77 +203,55 @@
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>Referance</th>
+                                        <th>Date creation</th>
+                                        <th>status</th>
+                                        <th>agent</th>
+                                        <th>progress</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>Referance</th>
+                                        <th>Date creation</th>
+                                        <th>status</th>
+                                        <th>agent</th>
+                                        <th>progress</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <tr>
-                                        <td>Systems Administrator</td>
-                                        <td>London</td>
-                                        <td>21</td>
-                                        <td>2009/02/27</td>
-                                        <td>$103,500</td>
-                                        <td class="progress-container">
-                                            <!-- Line Progress for PC -->
-                                            <div class="progress-line">
-                                                <div class="fill" style="width: 80%;"></div>
-                                                <!-- Set progress width dynamically -->
-                                                <div class="percentage">70%</div>
-                                            </div>
+                                    <?php
+                                    $dossiers_encoure_query = "SELECT * FROM dossiers WHERE statut = 'en cours'";
 
-                                            <!-- Circle Progress for Mobile -->
-                                            <div class="progress-circle" style="--progress: 70%;">
-                                                <div class="percentage">70%</div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jonas Alexander</td>
-                                        <td>Developer</td>
-                                        <td>San Francisco</td>
-                                        <td>30</td>
-                                        <td>2010/07/14</td>
-                                        <td>$86,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shad Decker</td>
-                                        <td>Regional Director</td>
-                                        <td>Edinburgh</td>
-                                        <td>51</td>
-                                        <td>2008/11/13</td>
-                                        <td>$183,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Michael Bruce</td>
-                                        <td>Javascript Developer</td>
-                                        <td>Singapore</td>
-                                        <td>29</td>
-                                        <td>2011/06/27</td>
-                                        <td>$183,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-                                        <td>$112,000</td>
-                                    </tr>
+                                    $dossiers_encoure_queryresult = mysqli_query($conn, $dossiers_encoure_query);
+                                    $dossiers_encoure_row = mysqli_fetch_all($dossiers_encoure_queryresult, MYSQLI_ASSOC);
+
+                                    // while ($dossiers_encoure_row) { 
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $dossiers_encoure_row['reference'] ?></td>
+                                            <td><?php echo $dossiers_encoure_row['date_creation'] ?></td>
+                                            <td><?php echo $dossiers_encoure_row['statut'] ?></td>
+                                            <td><?php echo $dossiers_encoure_row[''] ?></td>
+
+                                            <td class="progress-container">
+                                                <!-- Line Progress for PC -->
+                                                <div class="progress-line">
+                                                    <div class="fill"
+                                                        style="width:<?php echo $dossiers_encoure_row['progress'] ?>%;">
+                                                    </div>
+                                                    <!-- Set progress width dynamically -->
+                                                    <div class="percentage">70%</div>
+                                                </div>
+
+                                                <!-- Circle Progress for Mobile -->
+                                                <div class="progress-circle"
+                                                    style="--progress: <?php $dossiers_encoure_row['progress'] ?>%;">
+                                                    <div class="percentage">70%</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php  ?>
                                 </tbody>
                             </table>
                         </div>
