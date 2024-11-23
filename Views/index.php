@@ -4,37 +4,86 @@
 <head>
     <?php include "components/header.html"; ?>
     <style>
-        .circle-progress {
+        /* Common styles for progress container */
+        .progress-container {
             display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 10px auto;
+        }
+
+        /* Line progress (default for desktop) */
+        .progress-line {
+            display: flex;
+            align-items: center;
+            width: 80%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-line .fill {
+            background: #4caf50;
+            height: 100%;
+            width: 70%;
+            /* Set progress percentage */
+            transition: width 0.3s ease;
+        }
+
+        .progress-line .percentage {
+            position: absolute;
+            right: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Circle progress (for mobile) */
+        .progress-circle {
+            display: none;
+            /* Hidden on larger screens */
             justify-content: center;
             align-items: center;
-            flex-direction: row;
             position: relative;
-            width: 30px;
-            height: 30px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            
+            background: conic-gradient(#4caf50 0% var(--progress, 70%), #e0e0e0 var(--progress, 70%) 100%);
         }
 
-        .circle-progress::before {
-            content: '';
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 30px;
-            height: 30px;
-            background: #fff;
-            border-radius: 50%;
-            z-index: -1;
-        }
-
-        .circle-progress .percentage {
+        .progress-circle .percentage {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 18px;
+            font-size: 1rem;
             font-weight: bold;
+            color: #333;
+        }
+
+        /* Responsive behavior */
+        @media (max-width: 768px) {
+            .progress-line {
+                display: none;
+                /* Hide line progress on smaller screens */
+            }
+
+            .progress-circle {
+                display: flex;
+                /* Show circle progress on smaller screens */
+            }
+
+            .progress-circle {
+                width: 40px;
+                height: 40px;
+            }
+
+            .progress-circle .percentage {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -173,9 +222,17 @@
                                         <td>21</td>
                                         <td>2009/02/27</td>
                                         <td>$103,500</td>
-                                        <td>
-                                            <div class="circle-progress" style="background: conic-gradient(#4caf50 0% 70%, #e0e0e0 0% 100%);">
-                                                <label for=""><div class="percentage"></div> <h6 style="margin-left:130px; width: 100%; display:flex; align-items:center;">70% progress</h6></label>
+                                        <td class="progress-container">
+                                            <!-- Line Progress for PC -->
+                                            <div class="progress-line">
+                                                <div class="fill" style="width: 80%;"></div>
+                                                <!-- Set progress width dynamically -->
+                                                <div class="percentage">70%</div>
+                                            </div>
+
+                                            <!-- Circle Progress for Mobile -->
+                                            <div class="progress-circle" style="--progress: 70%;">
+                                                <div class="percentage">70%</div>
                                             </div>
                                         </td>
                                     </tr>
