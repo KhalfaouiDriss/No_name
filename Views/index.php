@@ -269,9 +269,12 @@
         } else if (isset($_GET['page']) && $_GET['page'] == 'views_dos') {
             include "views_dos.php";
         } else if (isset($_GET['page']) && $_GET['page'] == 'view_doc' && isset($_GET['id'])) {
-            // التحقق من وجود المتغير id
-            $_GET['id'] = htmlspecialchars($_GET['id']); // حماية ضد الهجمات
+            $_GET['id'] = htmlspecialchars($_GET['id']);
             include "view_doc.php";
+        } else if (isset($_GET['page']) && $_GET['page'] == 'creat_dos') {
+            ?>
+                <?php
+                include "creat_dos.php";
         }
         ?>
 
