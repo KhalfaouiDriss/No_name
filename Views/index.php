@@ -259,10 +259,9 @@
 
 <body class="sb-nav-fixed">
     <?php include 'components/navbar.php' ?>
-
     <div id="layoutSidenav">
-        <?php include 'components/slidebar.html'; ?>
-
+        <?php include 'components/slidebar.html';?>
+        
         <?php
         if (isset($_GET['page']) && $_GET['page'] == 'index') {
             include "dashboard.php";
@@ -272,14 +271,12 @@
             $_GET['id'] = htmlspecialchars($_GET['id']);
             include "view_doc.php";
         } else if (isset($_GET['page']) && $_GET['page'] == 'creat_dos') {
-            ?>
-                <?php
-                include "creat_dos.php";
+            include "creat_dos.php";
         }
         ?>
-
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         <?php
         function getStatusColor($statut)
@@ -296,10 +293,6 @@
             }
         }
         ?>
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
         const ctx = document.getElementById('myChart');
         new Chart(ctx, {
             type: 'bar',
@@ -319,6 +312,9 @@
                 }
             }
         });
+
+
+
     </script>
 
     </script>
