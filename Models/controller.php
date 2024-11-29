@@ -40,22 +40,45 @@ if (isset($_POST['vehicle_info'])) {
     $marque = $_POST['marque'];
     $modele = $_POST['modele'];
     $immatriculation = $_POST['immatriculation'];
-    $id_dossier = $_SESSION['referance']; // This should come from session or previous step
+    $ref_dossier = $_SESSION['referance']; // This should come from session or previous step
 
     // Insert the vehicle into the database
-    $query = "INSERT INTO vehicules (marque, modele, immatriculation, id_dossier) 
-              VALUES ('$marque', '$modele', '$immatriculation', '$id_dossier')";
+    $query = "INSERT INTO vehicules (marque, modele, immatriculation, ref_dossier) 
+              VALUES ('$marque', '$modele', '$immatriculation', '$ref_dossier')";
 
     if (mysqli_query($conn, $query)) {
         // Redirect to success page or display a success message
         $_SESSION['message'] = "Véhicule ajouté avec succès";
-        header("Location: ../Views/index.php?page=vehicule_info");
+        header("Location: ../Views/index.php?page=creat_dos&action=remarque");
     } else {
         // Handle insertion failure
         $_SESSION['error'] = "Erreur lors de l'ajout du véhicule";
         header("Location: ../Views/index.php?page=vehicule_info");
     }
 }
+
+if (isset($_POST['submit_remark'])) {
+    // Sanitize user input
+    $remark = htmlspecialchars(trim($_POST['remark'])); 
+    $ref_dossier = htmlspecialchars(trim($_SESSION['referance'])); // Ensure session variable is safe
+
+    // Update the "consulté" field in the "dossiers" table for the specified "referance"
+    $query = "UPDATE dossiers SET consulté = '$remark' WHERE reference = '$ref_dossier'";
+
+    if (mysqli_query($conn, $query)) {
+        // Redirect to success page or display a success message
+        $_SESSION['message'] = "Merci pour votre remarque!";
+        header("Location: ../Views/index.php?page=index");
+        exit();
+    } else {
+        // Handle insertion failure
+        $_SESSION['error'] = "Erreur lors de l'envoi de la remarque.";
+        header("Location: ../Views/index.php?page=index");
+        exit();
+    }
+}
+
+
 
 
 
