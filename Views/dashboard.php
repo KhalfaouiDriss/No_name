@@ -78,7 +78,7 @@
                                     <tr>
                                         <td scope="row"><img src="../stock/profel_img/dkhalfao.jpg" alt="user image"
                                                 class="table-img"></td>
-                                        <td>khalfaoui driss</td>
+                                        <td>ibtissam filali</td>
                                         <td>admin</td>
                                         <td>
                                             <!-- <span class="status-indicator active"></span> -->
@@ -89,7 +89,7 @@
                                     <tr>
                                         <td scope="row"><img src="../stock/profel_img/dkhalfao.jpg" alt="user image"
                                                 class="table-img"></td>
-                                        <td>khalfaoui driss</td>
+                                        <td>ibtissam filali</td>
                                         <td>admin</td>
                                         <td>
                                             <!-- <span class="status-indicator active"></span> -->
@@ -100,7 +100,7 @@
                                     <tr>
                                         <td scope="row"><img src="../stock/profel_img/dkhalfao.jpg" alt="user image"
                                                 class="table-img"></td>
-                                        <td>khalfaoui driss</td>
+                                        <td>ibtissam filali</td>
                                         <td>admin</td>
                                         <td>
                                             <!-- <span class="status-indicator active"></span> -->
@@ -111,7 +111,7 @@
                                     <tr>
                                         <td scope="row"><img src="../stock/profel_img/dkhalfao.jpg" alt="user image"
                                                 class="table-img"></td>
-                                        <td>khalfaoui driss</td>
+                                        <td>ibtissam filali</td>
                                         <td>admin</td>
                                         <td>
                                             <!-- <span class="status-indicator active"></span> -->
@@ -122,7 +122,7 @@
                                     <tr>
                                         <td scope="row"><img src="../stock/profel_img/dkhalfao.jpg" alt="user image"
                                                 class="table-img"></td>
-                                        <td>khalfaoui driss</td>
+                                        <td>ibtissam filali</td>
                                         <td>admin</td>
                                         <td>
                                             <!-- <span class="status-indicator active"></span> -->
@@ -133,7 +133,7 @@
                                     <tr>
                                         <td scope="row"><img src="../stock/profel_img/dkhalfao.jpg" alt="user image"
                                                 class="table-img"></td>
-                                        <td>khalfaoui driss</td>
+                                        <td>ibtissam filali</td>
                                         <td>admin</td>
                                         <td>
                                             <!-- <span class="status-indicator active"></span> -->
@@ -144,7 +144,7 @@
                                     <tr>
                                         <td scope="row"><img src="../stock/profel_img/dkhalfao.jpg" alt="user image"
                                                 class="table-img"></td>
-                                        <td>khalfaoui driss</td>
+                                        <td>ibtissam filali</td>
                                         <td>admin</td>
                                         <td>
                                             <!-- <span class="status-indicator active"></span> -->
@@ -155,7 +155,7 @@
                                     <tr>
                                         <td scope="row"><img src="../stock/profel_img/dkhalfao.jpg" alt="user image"
                                                 class="table-img"></td>
-                                        <td>khalfaoui driss</td>
+                                        <td>ibtissam filali</td>
                                         <td>admin</td>
                                         <td>
                                             <!-- <span class="status-indicator active"></span> -->
@@ -166,7 +166,7 @@
                                     <tr>
                                         <td scope="row"><img src="../stock/profel_img/dkhalfao.jpg" alt="user image"
                                                 class="table-img"></td>
-                                        <td>khalfaoui driss</td>
+                                        <td>ibtissam filali</td>
                                         <td>admin</td>
                                         <td>
                                             <!-- <span class="status-indicator active"></span> -->
