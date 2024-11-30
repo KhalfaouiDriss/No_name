@@ -70,7 +70,7 @@
                                             <!-- Update -->
                                         </a>
                                         <a class="btn btn-danger btn-sm"
-                                            href="index.php?page=delete_dossier&id=<?php echo $row['id_dossier']; ?>"
+                                            href="../Models/delete/delete_dossier.php?id=<?php echo $row['id_dossier']; ?>"
                                             onclick="return confirm('Are you sure you want to delete this dossier?');">
                                             <i class="fas fa-trash"></i>
                                             <!-- Delete -->
