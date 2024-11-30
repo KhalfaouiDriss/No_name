@@ -320,10 +320,10 @@
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: chartLabels, // Use chart types as labels
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                 datasets: [{
                     label: '# of Dossier',
-                    data: chartData, // Use dossier counts as data
+                    data: chartData,
                     borderWidth: 1,
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)'
