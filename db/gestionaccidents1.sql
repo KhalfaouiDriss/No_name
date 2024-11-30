@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 07:21 AM
+-- Generation Time: Nov 30, 2024 at 07:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -92,6 +92,15 @@ CREATE TABLE `clintes` (
   `id_client` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `clintes`
+--
+
+INSERT INTO `clintes` (`first_name`, `last_name`, `phone`, `email`, `CIN`, `IMG_CIN`, `CG`, `IMG_GC`, `IMG_CIN_VERSO`, `IMG_GC_VERSO`, `agent_assurance`, `date_permis`, `date_assurance_payment`, `IMG_PIRMI`, `IMG_PIRMI_VERSO`, `reference_dos`, `id_client`) VALUES
+('Driss', 'Khalfaoui', '015510206620', 'firaas.alzubair@gmail.com', 'CD328739', '../Stock/documents/F301124DK0/CIN_R_301124DK0.jpg', 'DD232313', '../Stock/documents/F301124DK0/CG_R_301124DK0.jpg', '../Stock/documents/F301124DK0/CIN_V_301124DK0.jpg', '../Stock/documents/F301124DK0/CG_V_301124DK0.jpg', 'agent2', '2024-11-12', '2024-11-13', '../Stock/documents/F301124DK0/PERMIS_R_301124DK0.j', '../Stock/documents/F301124DK0/PERMIS_V_301124DK0.j', '301124DK0', 26),
+('Firaas', 'Deyab', '015510206620', 'firaas.alzubair@gmail.com', 'CD328739', '../Stock/documents/F301124FD1/CIN_R_301124FD1.jpg', 'DD232313', '../Stock/documents/F301124FD1/CG_R_301124FD1.jpg', '../Stock/documents/F301124FD1/CIN_V_301124FD1.jpg', '../Stock/documents/F301124FD1/CG_V_301124FD1.jpg', 'agent2', '2024-11-12', '2024-11-13', '../Stock/documents/F301124FD1/PERMIS_R_301124FD1.j', '../Stock/documents/F301124FD1/PERMIS_V_301124FD1.j', '301124FD1', 27),
+('omar', 'janati‬‎', '015510206620', 'drisspaca4@gmail.com', 'CD328739', '../Stock/documents/F301124OJ2/CIN_R_301124OJ2.jpg', 'DD232313', '../Stock/documents/F301124OJ2/CG_R_301124OJ2.jpg', '../Stock/documents/F301124OJ2/CIN_V_301124OJ2.jpg', '../Stock/documents/F301124OJ2/CG_V_301124OJ2.jpg', 'agent1', '2024-11-14', '2024-11-20', '../Stock/documents/F301124OJ2/PERMIS_R_301124OJ2.j', '../Stock/documents/F301124OJ2/PERMIS_V_301124OJ2.j', '301124OJ2', 28);
+
 -- --------------------------------------------------------
 
 --
@@ -134,10 +143,20 @@ CREATE TABLE `dossiers` (
   `date_creation` date NOT NULL,
   `statut` varchar(25) NOT NULL DEFAULT 'en cours',
   `progress` int(25) NOT NULL DEFAULT 20,
-  `consulté` tinyint(1) DEFAULT 0,
+  `consulté` varchar(255) DEFAULT 'Null',
   `date_derniere_consultation` timestamp NULL DEFAULT NULL,
-  `id_agent` int(11) NOT NULL
+  `id_agent` int(11) NOT NULL,
+  `charts` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `dossiers`
+--
+
+INSERT INTO `dossiers` (`id_dossier`, `reference`, `date_creation`, `statut`, `progress`, `consulté`, `date_derniere_consultation`, `id_agent`, `charts`) VALUES
+(25, '301124DK0', '2024-11-30', 'en cours', 20, 'good', NULL, 1, '11/24'),
+(26, '301124FD1', '2024-11-30', 'en cours', 20, 'good', NULL, 1, '11/24'),
+(27, '301124OJ2', '2024-11-30', 'en cours', 20, 'nice', NULL, 1, '11/24');
 
 -- --------------------------------------------------------
 
@@ -213,8 +232,17 @@ CREATE TABLE `vehicules` (
   `marque` varchar(100) NOT NULL,
   `modele` varchar(100) NOT NULL,
   `immatriculation` varchar(20) NOT NULL,
-  `id_dossier` int(11) NOT NULL
+  `ref_dossier` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `vehicules`
+--
+
+INSERT INTO `vehicules` (`id_vehicule`, `marque`, `modele`, `immatriculation`, `ref_dossier`) VALUES
+(12, 'dacia', '2012', '0000-b-01', '301124DK0'),
+(13, 'dacia', '2012', '0000-b-01', '301124FD1'),
+(14, 'dacia', '2012', '0000-b-01', '301124OJ2');
 
 --
 -- Indexes for dumped tables
@@ -299,9 +327,7 @@ ALTER TABLE `reparations`
 --
 ALTER TABLE `vehicules`
   ADD PRIMARY KEY (`id_vehicule`),
-  ADD UNIQUE KEY `immatriculation` (`immatriculation`),
-  ADD KEY `id_dossier` (`id_dossier`),
-  ADD KEY `idx_immatriculation` (`immatriculation`);
+  ADD KEY `ref_dossier` (`ref_dossier`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -323,7 +349,7 @@ ALTER TABLE `archivage`
 -- AUTO_INCREMENT for table `clintes`
 --
 ALTER TABLE `clintes`
-  MODIFY `id_client` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_client` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `devis`
@@ -341,7 +367,7 @@ ALTER TABLE `documents`
 -- AUTO_INCREMENT for table `dossiers`
 --
 ALTER TABLE `dossiers`
-  MODIFY `id_dossier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_dossier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `horaires`
@@ -371,7 +397,7 @@ ALTER TABLE `reparations`
 -- AUTO_INCREMENT for table `vehicules`
 --
 ALTER TABLE `vehicules`
-  MODIFY `id_vehicule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_vehicule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
@@ -423,7 +449,7 @@ ALTER TABLE `reparations`
 -- Constraints for table `vehicules`
 --
 ALTER TABLE `vehicules`
-  ADD CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`id_dossier`) REFERENCES `dossiers` (`id_dossier`) ON DELETE CASCADE;
+  ADD CONSTRAINT `vehicules_ibfk_1` FOREIGN KEY (`ref_dossier`) REFERENCES `dossiers` (`reference`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
