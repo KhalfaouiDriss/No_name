@@ -31,7 +31,6 @@ if (isset($_POST['client_info'])) {
         }
     } else {
         cleanUpFilesAndDirectories($result);
-
         echo "Error: " . $result['message'];
     }
 }
