@@ -196,6 +196,7 @@
                                 <th>Reference</th>
                                 <th>Date creation</th>
                                 <th>Status</th>
+                                <th>consulté</th>
                                 <th class="progg">Progress</th>
                             </tr>
                         </thead>
@@ -203,6 +204,7 @@
                             <tr>
                                 <th>Reference</th>
                                 <th>Date creation</th>
+                                <th>Status</th>
                                 <th>Status</th>
                                 <th class="progg">Progress</th>
                             </tr>
@@ -224,6 +226,9 @@
                                             <?php echo htmlspecialchars($row['statut']); ?>
                                         </span>
                                     </td>
+
+                                    <td><?php echo htmlspecialchars($row['consulté']); ?></td>
+
                                     <td class="progress-container progg">
                                         <div class="progress-line">
                                             <div class="fill"
@@ -238,8 +243,6 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-
-
                 </div>
             </div>
         </div>

@@ -3,14 +3,15 @@
 function generate_reference($name, $last_name, $dos_count, $conn)
 {
     $date = date("dmy");
-    $proposed_ref = $date . strtoupper($name[0]) . strtoupper($last_name[0]) . ($dos_count);
-
+    $proposed_ref_1 = $date . strtoupper($name[0]) . strtoupper($last_name[0]);
+    
     
     $stmt = $conn->prepare("SELECT 1 FROM dossiers WHERE reference = ? LIMIT 1");
-    $stmt->bind_param("s", $proposed_ref);
+    $stmt->bind_param("s", $proposed_ref_1);
     $stmt->execute();
     $stmt->store_result();
-
+    
+    $proposed_ref = $date . strtoupper($name[0]) . strtoupper($last_name[0]) . ($dos_count);
     
     if ($stmt->num_rows > 0) {
         $stmt->close();
@@ -18,14 +19,15 @@ function generate_reference($name, $last_name, $dos_count, $conn)
     }
 
     $stmt->close();
-    return $proposed_ref; 
+    return $proposed_ref;
 }
+
 
 
 
 function handleFormData($data, $files, $dossier_count, $conn)
 {
-    
+
     $date_creation = date("Y-m-d H:i:s");
     $client_first_name = htmlspecialchars($data['client_first_name']);
     $client_last_name = htmlspecialchars($data['client_last_name']);
@@ -36,13 +38,13 @@ function handleFormData($data, $files, $dossier_count, $conn)
     $agent_assurance = htmlspecialchars($data['agent_assurance']);
     $date_permis = htmlspecialchars($data['date_permis']);
     $date_assurance_payment = htmlspecialchars($data['date_assurance_payment']);
-    $vue_status = $_POST['vue_status']; 
+    $vue_status = $_POST['vue_status'];
 
 
-    
+
     $referance = generate_reference($client_first_name, $client_last_name, $dossier_count, $conn);
 
-    
+
     $cin_img_recto = $files['cin_img_recto'];
     $cin_img_verso = $files['cin_img_verso'];
     $card_grise_img_recto = $files['card_grise_img_recto'];
@@ -50,13 +52,13 @@ function handleFormData($data, $files, $dossier_count, $conn)
     $permis_img_recto = $files['permis_img_recto'];
     $permis_img_verso = $files['permis_img_verso'];
 
-    
+
     $upload_dir = '../Stock/documents/F' . $referance;
     if (!file_exists($upload_dir)) {
-        mkdir($upload_dir, 0777, true); 
+        mkdir($upload_dir, 0777, true);
     }
 
-    
+
     $cin_img_recto_path = $upload_dir . '/CIN_R_' . $referance . '.' . pathinfo($cin_img_recto['name'], PATHINFO_EXTENSION);
     $cin_img_verso_path = $upload_dir . '/CIN_V_' . $referance . '.' . pathinfo($cin_img_verso['name'], PATHINFO_EXTENSION);
     $card_grise_img_recto_path = $upload_dir . '/CG_R_' . $referance . '.' . pathinfo($card_grise_img_recto['name'], PATHINFO_EXTENSION);
@@ -66,25 +68,31 @@ function handleFormData($data, $files, $dossier_count, $conn)
 
     $upload_success = true;
 
-    
-    if (!move_uploaded_file($cin_img_recto['tmp_name'], $cin_img_recto_path) || 
-        !move_uploaded_file($cin_img_verso['tmp_name'], $cin_img_verso_path)) {
+
+    if (
+        !move_uploaded_file($cin_img_recto['tmp_name'], $cin_img_recto_path) ||
+        !move_uploaded_file($cin_img_verso['tmp_name'], $cin_img_verso_path)
+    ) {
         $upload_success = false;
     }
 
-    
-    if (!move_uploaded_file($card_grise_img_recto['tmp_name'], $card_grise_img_recto_path) || 
-        !move_uploaded_file($card_grise_img_verso['tmp_name'], $card_grise_img_verso_path)) {
+
+    if (
+        !move_uploaded_file($card_grise_img_recto['tmp_name'], $card_grise_img_recto_path) ||
+        !move_uploaded_file($card_grise_img_verso['tmp_name'], $card_grise_img_verso_path)
+    ) {
         $upload_success = false;
     }
 
-    
-    if (!move_uploaded_file($permis_img_recto['tmp_name'], $permis_img_recto_path) || 
-        !move_uploaded_file($permis_img_verso['tmp_name'], $permis_img_verso_path)) {
+
+    if (
+        !move_uploaded_file($permis_img_recto['tmp_name'], $permis_img_recto_path) ||
+        !move_uploaded_file($permis_img_verso['tmp_name'], $permis_img_verso_path)
+    ) {
         $upload_success = false;
     }
 
-    
+
     if ($upload_success) {
         return [
             'success' => true,
@@ -123,14 +131,14 @@ function handleFormData($data, $files, $dossier_count, $conn)
 function insertClientData($data, $conn)
 {
     try {
-        $id_agent = 1; 
+        $id_agent = 1;
 
-        
-        $sql = "INSERT INTO clintes (first_name, last_name, phone, email, CIN, CG, agent_assurance, date_permis, date_assurance_payment, IMG_CIN, IMG_CIN_VERSO, IMG_GC, IMG_GC_VERSO, IMG_PIRMI, IMG_PIRMI_VERSO)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $sql1 = "INSERT INTO dossiers (reference, progress, date_creation, id_agent, consulté) VALUES (?, ?, ?, ?, ?)";
 
-        
+        $sql = "INSERT INTO clintes (reference_dos, first_name, last_name, phone, email, CIN, CG, agent_assurance, date_permis, date_assurance_payment, IMG_CIN, IMG_CIN_VERSO, IMG_GC, IMG_GC_VERSO, IMG_PIRMI, IMG_PIRMI_VERSO)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql1 = "INSERT INTO dossiers (reference, progress, date_creation, id_agent, consulté, charts) VALUES (?, ?, ?, ?, ?, ?)";
+
+
         $stmt = $conn->prepare($sql);
         $stmt1 = $conn->prepare($sql1);
 
@@ -138,9 +146,11 @@ function insertClientData($data, $conn)
             throw new Exception("Prepare failed: " . $conn->error);
         }
 
-        
+        $charts = date("m/y");
+
         $stmt->bind_param(
-            'sssssssssssssss',
+            'ssssssssssssssss',
+            $data['referance'],
             $data['client_first_name'],
             $data['client_last_name'],
             $data['phone_number'],
@@ -155,17 +165,19 @@ function insertClientData($data, $conn)
             $data['card_grise_img_recto_path'],
             $data['card_grise_img_verso_path'],
             $data['permis_img_recto_path'],
-            $data['permis_img_verso_path']
+            $data['permis_img_verso_path'],
         );
 
         $progress = 20;
         $stmt1->bind_param(
-            'sssis',
+            'sssiss',
             $data['referance'],
             $progress,
             $data['date_creation'],
             $id_agent,
-            $data['vue_status']
+            $data['vue_status'],
+            $charts
+
         );
 
         if (!$stmt->execute()) {
@@ -191,7 +203,8 @@ function insertClientData($data, $conn)
 
 
 
-function cleanUpFilesAndDirectories($result) {
+function cleanUpFilesAndDirectories($result)
+{
     if (is_dir($result['referance'])) {
         deleteDirectory($result['referance']);
     }
@@ -212,19 +225,20 @@ function cleanUpFilesAndDirectories($result) {
     }
 }
 
-function deleteDirectory($dir) {
+function deleteDirectory($dir)
+{
     $files = array_diff(scandir($dir), array('.', '..'));
 
     foreach ($files as $file) {
         $filePath = $dir . DIRECTORY_SEPARATOR . $file;
         if (is_dir($filePath)) {
-            deleteDirectory($filePath); 
+            deleteDirectory($filePath);
         } else {
-            unlink($filePath); 
+            unlink($filePath);
         }
     }
 
-    rmdir($dir); 
+    rmdir($dir);
 }
 
 

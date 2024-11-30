@@ -260,8 +260,8 @@
 <body class="sb-nav-fixed">
     <?php include 'components/navbar.php' ?>
     <div id="layoutSidenav">
-        <?php include 'components/slidebar.html';?>
-        
+        <?php include 'components/slidebar.html'; ?>
+
         <?php
         if (isset($_GET['page']) && $_GET['page'] == 'index') {
             include "dashboard.php";
@@ -275,6 +275,26 @@
         }
         ?>
     </div>
+
+    <?php
+    $query_chart = "SELECT charts, COUNT(*) AS count FROM dossiers GROUP BY charts";
+
+    $result = mysqli_query($conn, $query_chart);
+
+    $chartLabels = [];
+    $chartData = [];
+
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            // Collect chart types and their counts
+            $chartLabels[] = $row['charts'];
+            $chartData[] = $row['count'];
+        }
+    } else {
+        echo "Error executing query: " . mysqli_error($conn);
+        exit();
+    }
+    ?>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -293,15 +313,20 @@
             }
         }
         ?>
+        const chartLabels = <?php echo json_encode($chartLabels); ?>;
+        const chartData = <?php echo json_encode($chartData); ?>;
+
         const ctx = document.getElementById('myChart');
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                labels: chartLabels, // Use chart types as labels
                 datasets: [{
                     label: '# of Dossier',
-                    data: [3000, 3200],
-                    borderWidth: 1
+                    data: chartData, // Use dossier counts as data
+                    borderWidth: 1,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)'
                 }]
             },
             options: {
@@ -313,12 +338,7 @@
             }
         });
 
-
-
     </script>
-
-    </script>
-
 </body>
 
 </html>
