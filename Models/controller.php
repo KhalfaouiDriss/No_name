@@ -57,12 +57,13 @@ if (isset($_POST['vehicle_info'])) {
 }
 
 if (isset($_POST['submit_remark'])) {
-    // Sanitize user input
-    $remark = htmlspecialchars(trim($_POST['remark'])); 
+    // Sanitize user inputs
+    $remark = htmlspecialchars(trim($_POST['remark']));
     $ref_dossier = htmlspecialchars(trim($_SESSION['referance'])); // Ensure session variable is safe
+    $vue_status = htmlspecialchars(trim($_POST['vue_status']));
 
-    // Update the "consulté" field in the "dossiers" table for the specified "referance"
-    $query = "UPDATE dossiers SET consulté = '$remark' WHERE reference = '$ref_dossier'";
+    // Insert a new record into the "dossiers" table
+    $query = "INSERT INTO _consulté (ref_dos, remark, consulté) VALUES ('$ref_dossier', '$remark', '$vue_status')";
 
     if (mysqli_query($conn, $query)) {
         // Redirect to success page or display a success message
@@ -71,11 +72,13 @@ if (isset($_POST['submit_remark'])) {
         exit();
     } else {
         // Handle insertion failure
-        $_SESSION['error'] = "Erreur lors de l'envoi de la remarque.";
+        $_SESSION['error'] = "Erreur lors de l'envoi de la remarque: " . mysqli_error($conn);
         header("Location: ../Views/index.php?page=index");
         exit();
     }
 }
+
+
 
 
 

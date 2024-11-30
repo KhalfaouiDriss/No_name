@@ -159,6 +159,18 @@
                                             <div class="card-body">
                                                 <form id="remark-form" role="form" action="../Models/controller.php"
                                                     method="POST">
+                                                    <div class="row mb-3">
+                                                        <div class="col-1"></div>
+                                                        <div class="col-2">
+                                                            <b>Vue</b>
+                                                            <input type="radio" name="vue_status" value="1" required>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <b>Non Vue</b>
+                                                            <input type="radio" name="vue_status" value="0" required>
+                                                        </div>
+                                                    </div>
+
                                                     <!-- Remarque -->
                                                     <div class="mb-3">
                                                         <label for="remark" class="form-label">Votre Remarque *</label>
@@ -252,7 +264,6 @@
                                                                     class="form-control" required>
                                                             </div>
                                                         </div>
-
                                                     </div>
 
                                                     <!-- Carte grise -->
@@ -279,69 +290,31 @@
                                                                     name="card_grise_img_verso" class="form-control" required>
                                                             </div>
                                                         </div>
-
                                                     </div>
 
-                                                    <!-- Nom de l'agent d'assurance -->
-                                                    <div class="row mb-3">
-                                                        <div class="col-12">
-                                                            <label for="agent_assurance">Nom de l'agent d'assurance *</label>
-                                                            <select id="agent_assurance" name="agent_assurance"
-                                                                class="form-control" required>
-                                                                <option value="">-- Sélectionnez un agent d'assurance --
-                                                                </option>
-                                                                <option value="agent1">Agent 1</option>
-                                                                <option value="agent2">Agent 2</option>
-                                                                <option value="agent3">Agent 3</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Détails du permis -->
+                                                    <!-- Détails du numéro de châssis -->
                                                     <div class="row mb-3">
                                                         <div class="col-md-6 col-12">
-                                                            <label for="date_permis">Date de délivrance du permis *</label>
-                                                            <input id="date_permis" type="date" name="date_permis"
+                                                            <label for="vin_number">Le numéro de châssis (code VIN) *</label>
+                                                            <input id="vin_number" type="text" name="vin_number"
+                                                                class="form-control"
+                                                                placeholder="Entrez le numéro de châssis (code VIN)" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Images du code VIN -->
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6 col-12">
+                                                            <label for="VIN_img_recto">Code VIN Recto *</label>
+                                                            <input id="VIN_img_recto" type="file" name="VIN_img_recto"
                                                                 class="form-control" required>
                                                         </div>
-                                                        <!-- Permis Recto and Verso -->
-                                                        <div class="row mb-3">
-                                                            <div class="col-md-6 col-12">
-                                                                <label for="permis_img_recto">Permis Recto *</label>
-                                                                <input id="permis_img_recto" type="file" name="permis_img_recto"
-                                                                    class="form-control" required>
-                                                            </div>
-                                                            <div class="col-md-6 col-12 mt-md-0 mt-3">
-                                                                <label for="permis_img_verso">Permis Verso *</label>
-                                                                <input id="permis_img_verso" type="file" name="permis_img_verso"
-                                                                    class="form-control" required>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <!-- Détails du paiement de l'assurance -->
-                                                    <div class="row mb-3">
-                                                        <div class="col-12">
-                                                            <label for="date_assurance_payment">Date de paiement de l'assurance
-                                                                *</label>
-                                                            <input id="date_assurance_payment" type="date"
-                                                                name="date_assurance_payment" class="form-control" required>
+                                                        <div class="col-md-6 col-12 mt-md-0 mt-3">
+                                                            <label for="VIN_img_verso">Code VIN Verso *</label>
+                                                            <input id="VIN_img_verso" type="file" name="VIN_img_verso"
+                                                                class="form-control" required>
                                                         </div>
                                                     </div>
-
-                                                    <div class="row mb-3">
-                                                        <div class="col-1"></div>
-                                                        <div class="col-2">
-                                                            <b>Vue</b>
-                                                            <input type="radio" name="vue_status" value="1" required>
-                                                        </div>
-                                                        <div class="col-2">
-                                                            <b>Non Vue</b>
-                                                            <input type="radio" name="vue_status" value="0" required>
-                                                        </div>
-                                                    </div>
-
 
                                                     <!-- Bouton de soumission -->
                                                     <div class="text-center">
@@ -349,12 +322,12 @@
                                                             class="btn btn-success btn-send">Soumettre</button>
                                                     </div>
                                                 </form>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                     <?php } ?>
                 </div>
             </div>

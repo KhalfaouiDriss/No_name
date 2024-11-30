@@ -18,7 +18,8 @@
                                 <th>Date creation</th>
                                 <th>Status</th>
                                 <th class="progg">Progress</th>
-                                <th>Documents</th>
+                                <!-- <th>Documents</th> -->
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -27,7 +28,8 @@
                                 <th>Date creation</th>
                                 <th>Status</th>
                                 <th class="progg">Progress</th>
-                                <th>Documents</th>
+                                <!-- <th>Documents</th> -->
+                                <th>Action</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -43,32 +45,45 @@
                                     <td><?php echo htmlspecialchars($row['date_creation']); ?></td>
                                     <td>
                                         <span class="badge"
-                                        style="background-color: <?php echo getStatusColor($row['statut']); ?>;">
-                                        <?php echo htmlspecialchars($row['statut']); ?>
-                                    </span>
-                                </td>
-                                <td class="progress-container progg">
-                                    <div class="progress-line">
-                                        <div class="fill"
-                                        style="width: <?php echo htmlspecialchars($row['progress']); ?>%;">
-                                    </div>
-                                </div>
-                                <div class="percentage">
-                                    <?php echo htmlspecialchars($row['progress']); ?>%
-                                </div>
-                            </td>
-                            <td>
-                                <a class="btn btn-primary btn-sm"
-                                    href="index.php?page=view_doc&id=<?php echo $row['id_dossier'] ?>">
-                                    <i class="fas fa-folder">
-                                    </i>
-                                    View
-                                </a>
-                            </td>
+                                            style="background-color: <?php echo getStatusColor($row['statut']); ?>;">
+                                            <?php echo htmlspecialchars($row['statut']); ?>
+                                        </span>
+                                    </td>
+                                    <td class="progress-container progg">
+                                        <div class="progress-line">
+                                            <div class="fill"
+                                                style="width: <?php echo htmlspecialchars($row['progress']); ?>%;">
+                                            </div>
+                                        </div>
+                                        <div class="percentage">
+                                            <?php echo htmlspecialchars($row['progress']); ?>%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm"
+                                            href="view_doc.php?id=<?php echo $row['id_dossier']; ?>">
+                                            <i class="fas fa-folder"></i> View
+                                        </a>
+                                        <a class="btn btn-warning btn-sm"
+                                            href="index.php?page=update_dossier&id=<?php echo $row['id_dossier']; ?>">
+                                            <i class="fas fa-edit"></i>
+                                            <!-- Update -->
+                                        </a>
+                                        <a class="btn btn-danger btn-sm"
+                                            href="index.php?page=delete_dossier&id=<?php echo $row['id_dossier']; ?>"
+                                            onclick="return confirm('Are you sure you want to delete this dossier?');">
+                                            <i class="fas fa-trash"></i>
+                                            <!-- Delete -->
+                                        </a>
+                                    </td>
+                                    <!-- <td>
+                                       
+                                    </td> -->
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+
 
 
                 </div>
