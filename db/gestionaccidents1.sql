@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2024 at 07:13 AM
+-- Generation Time: Nov 30, 2024 at 06:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -86,20 +86,11 @@ CREATE TABLE `clintes` (
   `agent_assurance` varchar(25) NOT NULL,
   `date_permis` date NOT NULL,
   `date_assurance_payment` date NOT NULL,
-  `IMG_PIRMI` varchar(50) NOT NULL,
-  `IMG_PIRMI_VERSO` varchar(50) NOT NULL,
+  `IMG_VIN` varchar(50) NOT NULL,
+  `IMG_VIN_VERSO` varchar(50) NOT NULL,
   `reference_dos` varchar(50) NOT NULL,
   `id_client` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `clintes`
---
-
-INSERT INTO `clintes` (`first_name`, `last_name`, `phone`, `email`, `CIN`, `IMG_CIN`, `CG`, `IMG_GC`, `IMG_CIN_VERSO`, `IMG_GC_VERSO`, `agent_assurance`, `date_permis`, `date_assurance_payment`, `IMG_PIRMI`, `IMG_PIRMI_VERSO`, `reference_dos`, `id_client`) VALUES
-('Driss', 'Khalfaoui', '015510206620', 'firaas.alzubair@gmail.com', 'CD328739', '../Stock/documents/F301124DK0/CIN_R_301124DK0.jpg', 'DD232313', '../Stock/documents/F301124DK0/CG_R_301124DK0.jpg', '../Stock/documents/F301124DK0/CIN_V_301124DK0.jpg', '../Stock/documents/F301124DK0/CG_V_301124DK0.jpg', 'agent2', '2024-11-12', '2024-11-13', '../Stock/documents/F301124DK0/PERMIS_R_301124DK0.j', '../Stock/documents/F301124DK0/PERMIS_V_301124DK0.j', '301124DK0', 26),
-('Firaas', 'Deyab', '015510206620', 'firaas.alzubair@gmail.com', 'CD328739', '../Stock/documents/F301124FD1/CIN_R_301124FD1.jpg', 'DD232313', '../Stock/documents/F301124FD1/CG_R_301124FD1.jpg', '../Stock/documents/F301124FD1/CIN_V_301124FD1.jpg', '../Stock/documents/F301124FD1/CG_V_301124FD1.jpg', 'agent2', '2024-11-12', '2024-11-13', '../Stock/documents/F301124FD1/PERMIS_R_301124FD1.j', '../Stock/documents/F301124FD1/PERMIS_V_301124FD1.j', '301124FD1', 27),
-('omar', 'janati‬‎', '015510206620', 'drisspaca4@gmail.com', 'CD328739', '../Stock/documents/F301124OJ2/CIN_R_301124OJ2.jpg', 'DD232313', '../Stock/documents/F301124OJ2/CG_R_301124OJ2.jpg', '../Stock/documents/F301124OJ2/CIN_V_301124OJ2.jpg', '../Stock/documents/F301124OJ2/CG_V_301124OJ2.jpg', 'agent1', '2024-11-14', '2024-11-20', '../Stock/documents/F301124OJ2/PERMIS_R_301124OJ2.j', '../Stock/documents/F301124OJ2/PERMIS_V_301124OJ2.j', '301124OJ2', 28);
 
 -- --------------------------------------------------------
 
@@ -143,20 +134,10 @@ CREATE TABLE `dossiers` (
   `date_creation` date NOT NULL,
   `statut` varchar(25) NOT NULL DEFAULT 'en cours',
   `progress` int(25) NOT NULL DEFAULT 20,
-  `consulté` varchar(255) DEFAULT 'Null',
   `date_derniere_consultation` timestamp NULL DEFAULT NULL,
   `id_agent` int(11) NOT NULL,
   `charts` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `dossiers`
---
-
-INSERT INTO `dossiers` (`id_dossier`, `reference`, `date_creation`, `statut`, `progress`, `consulté`, `date_derniere_consultation`, `id_agent`, `charts`) VALUES
-(25, '301124DK0', '2024-11-30', 'en cours', 20, 'good', NULL, 1, '11/24'),
-(26, '301124FD1', '2024-11-30', 'en cours', 20, 'good', NULL, 1, '11/24'),
-(27, '301124OJ2', '2024-11-30', 'en cours', 20, 'nice', NULL, 1, '11/24');
 
 -- --------------------------------------------------------
 
@@ -235,14 +216,30 @@ CREATE TABLE `vehicules` (
   `ref_dossier` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `vehicules`
+-- Table structure for table `_consulté`
 --
 
-INSERT INTO `vehicules` (`id_vehicule`, `marque`, `modele`, `immatriculation`, `ref_dossier`) VALUES
-(12, 'dacia', '2012', '0000-b-01', '301124DK0'),
-(13, 'dacia', '2012', '0000-b-01', '301124FD1'),
-(14, 'dacia', '2012', '0000-b-01', '301124OJ2');
+CREATE TABLE `_consulté` (
+  `id` int(11) NOT NULL,
+  `consulté` varchar(11) NOT NULL,
+  `remark` varchar(255) NOT NULL,
+  `ref_dos` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `_consulté`
+--
+
+INSERT INTO `_consulté` (`id`, `consulté`, `remark`, `ref_dos`) VALUES
+(1, '1', 'gfgfgfgf', '301124MK3'),
+(2, '1', 'hahahahahah', '301124SS4'),
+(3, '1', 'good', '301124DK0'),
+(4, '1', 'good', '301124DK0'),
+(5, '1', 'good', '301124DK0'),
+(6, '1', 'good', '301124DK0');
 
 --
 -- Indexes for dumped tables
@@ -330,6 +327,12 @@ ALTER TABLE `vehicules`
   ADD KEY `ref_dossier` (`ref_dossier`);
 
 --
+-- Indexes for table `_consulté`
+--
+ALTER TABLE `_consulté`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -349,7 +352,7 @@ ALTER TABLE `archivage`
 -- AUTO_INCREMENT for table `clintes`
 --
 ALTER TABLE `clintes`
-  MODIFY `id_client` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_client` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `devis`
@@ -367,7 +370,7 @@ ALTER TABLE `documents`
 -- AUTO_INCREMENT for table `dossiers`
 --
 ALTER TABLE `dossiers`
-  MODIFY `id_dossier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_dossier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `horaires`
@@ -397,7 +400,13 @@ ALTER TABLE `reparations`
 -- AUTO_INCREMENT for table `vehicules`
 --
 ALTER TABLE `vehicules`
-  MODIFY `id_vehicule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_vehicule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `_consulté`
+--
+ALTER TABLE `_consulté`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
