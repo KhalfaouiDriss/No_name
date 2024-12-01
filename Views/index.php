@@ -254,6 +254,24 @@
             height: 100%;
             border: none;
         }
+
+        .status-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .status-circle.active {
+            background-color: #28a745;
+            /* Green for active */
+        }
+
+        .status-circle.inactive {
+            background-color: #dc3545;
+            /* Red for inactive */
+        }
     </style>
 </head>
 
@@ -272,6 +290,8 @@
             include "view_doc.php";
         } else if (isset($_GET['page']) && $_GET['page'] == 'creat_dos') {
             include "creat_dos.php";
+        } else if (isset($_GET['page']) && $_GET['page'] == 'agents') {
+            include "agents.php";
         }
         ?>
     </div>
