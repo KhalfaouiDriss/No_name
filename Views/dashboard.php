@@ -194,7 +194,7 @@
                         <thead>
                             <tr>
                                 <th>Reference</th>
-                                <th>Date creation</th>
+                                <th>date expertise</th>
                                 <th>Status</th>
                                 <th class="progg">Progress</th>
                             </tr>
@@ -202,7 +202,7 @@
                         <tfoot>
                             <tr>
                                 <th>Reference</th>
-                                <th>Date creation</th>
+                                <th>Date expertise</th>
                                 <th>Status</th>
                                 <th class="progg">Progress</th>
                             </tr>
@@ -210,14 +210,15 @@
                         <tbody>
                             <?php
                             // Query to get the last 50 entries sorted by date_creation
-                            $dossiers_encoure_query = "SELECT * FROM dossiers WHERE statut != 'complet' AND statut != 'en attente' AND progress > 0 ORDER BY -date_creation DESC LIMIT 50";
+                            $dossiers_encoure_query = "SELECT * FROM dossiers WHERE statut != 'complet' AND statut != 'en attente' AND progress > 0 ORDER BY -date_expertise DESC LIMIT 50";
+
                             $dossiers_encoure_queryresult = mysqli_query($conn, $dossiers_encoure_query);
                             $dossiers_encoure_rows = mysqli_fetch_all($dossiers_encoure_queryresult, MYSQLI_ASSOC);
 
                             foreach ($dossiers_encoure_rows as $row): ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['reference']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['date_creation']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['date_expertise']); ?></td>
                                     <td>
                                         <span class="badge"
                                             style="background-color: <?php echo getStatusColor($row['statut']); ?>;">
