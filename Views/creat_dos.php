@@ -158,17 +158,27 @@
                                         <div class="card mt-4 p-4">
                                             <div class="card-body">
                                                 <form id="remark-form" role="form" action="../Models/controller.php"
-                                                    method="POST">
+                                                    method="POST" enctype="multipart/form-data">
+                                                    <!-- Vue or Non Vue Selection -->
                                                     <div class="row mb-3">
                                                         <div class="col-1"></div>
                                                         <div class="col-2">
                                                             <b>Vue</b>
-                                                            <input type="radio" name="vue_status" value="1" required>
+                                                            <input type="radio" id="vue" name="vue_status" value="1" required>
                                                         </div>
                                                         <div class="col-2">
                                                             <b>Non Vue</b>
-                                                            <input type="radio" name="vue_status" value="0" required>
+                                                            <input type="radio" id="non_vue" name="vue_status" value="0"
+                                                                required>
                                                         </div>
+                                                    </div>
+
+                                                    <!-- File Upload (conditional) -->
+                                                    <div class="mb-3" id="file-upload-container" style="display: none;">
+                                                        <label for="annulation_letter" class="form-label">Lettre d'Annulation
+                                                            *</label>
+                                                        <input type="file" id="annulation_letter" name="annulation_letter"
+                                                            class="form-control" accept=".pdf,.txt" />
                                                     </div>
 
                                                     <!-- Remarque -->
@@ -191,17 +201,14 @@
                                     </div>
                                 </div>
                             </div>
-
                         <?php
                     } else {
                         ?>
-
                             <!-- -------------------------------------------------------------------------------------------------------- -->
-
                             <div class="container">
                                 <div class="text-center mt-4">
                                     <h1>Créer un nouveau dossier</h1>
-                                    <b class="text-muted">Veuillez remplir le client information</b>
+                                    <b class="text-muted">Veuillez remplir les informations du client</b>
                                 </div>
 
                                 <div class="row justify-content-center">
@@ -316,6 +323,15 @@
                                                         </div>
                                                     </div>
 
+                                                    <!-- Date de l'accident -->
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6 col-12">
+                                                            <label for="accident_date">Date de l'accident *</label>
+                                                            <input id="accident_date" type="date" name="accident_date"
+                                                                class="form-control" required>
+                                                        </div>
+                                                    </div>
+
                                                     <!-- Bouton de soumission -->
                                                     <div class="text-center">
                                                         <button type="submit" name="client_info"
@@ -327,6 +343,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
                     <?php } ?>
                 </div>

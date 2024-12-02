@@ -358,6 +358,30 @@
             }
         });
 
+        document.addEventListener('DOMContentLoaded', function () {
+            const vueRadio = document.getElementById('vue');
+            const nonVueRadio = document.getElementById('non_vue');
+            const fileUploadContainer = document.getElementById('file-upload-container');
+            const fileInput = document.getElementById('annulation_letter');
+
+            // Event listener for "Vue" radio
+            vueRadio.addEventListener('change', function () {
+                if (vueRadio.checked) {
+                    fileUploadContainer.style.display = 'none';
+                    fileInput.removeAttribute('required'); // Make optional when hidden
+                }
+            });
+
+            // Event listener for "Non Vue" radio
+            nonVueRadio.addEventListener('change', function () {
+                if (nonVueRadio.checked) {
+                    fileUploadContainer.style.display = 'block';
+                    fileInput.setAttribute('required', 'required'); // Make mandatory when visible
+                }
+            });
+        });
+
+
     </script>
 </body>
 

@@ -21,13 +21,22 @@ function generate_reference($name, $last_name, $dos_count, $conn)
 
 function handleFormData($data, $files, $dossier_count, $conn)
 {
-    $date_creation = date("Y-m-d H:i:s");
+    $date_expertise = date("Y-m-d H:i:s");
     $client_first_name = htmlspecialchars($data['client_first_name']);
     $client_last_name = htmlspecialchars($data['client_last_name']);
     $phone_number = htmlspecialchars($data['phone_number']);
     $email = htmlspecialchars($data['email']);
     $cin_number = htmlspecialchars($data['cin_number']);
     $card_grise_number = htmlspecialchars($data['card_grise_number']);
+
+    // Validate and retrieve accident date
+    if (!isset($data['accident_date']) || empty($data['accident_date'])) {
+        return [
+            'success' => false,
+            'message' => 'Accident date is required.',
+        ];
+    }
+    $accident_date = htmlspecialchars($data['accident_date']);
 
     $referance = generate_reference($client_first_name, $client_last_name, $dossier_count, $conn);
 
@@ -68,17 +77,18 @@ function handleFormData($data, $files, $dossier_count, $conn)
         }
     }
 
-    // Return success data with file paths
+    // Return success data with file paths and accident date
     return [
         'success' => true,
         'referance' => $referance,
-        'date_creation' => $date_creation,
+        'date_expertise' => $date_expertise,
         'client_first_name' => $client_first_name,
         'client_last_name' => $client_last_name,
         'phone_number' => $phone_number,
         'email' => $email,
         'cin_number' => $cin_number,
         'card_grise_number' => $card_grise_number,
+        'accident_date' => $accident_date,
         'cin_img_recto_path' => $file_paths['cin_img_recto'],
         'cin_img_verso_path' => $file_paths['cin_img_verso'],
         'card_grise_img_recto_path' => $file_paths['card_grise_img_recto'],
@@ -90,14 +100,18 @@ function handleFormData($data, $files, $dossier_count, $conn)
 }
 
 
+
 function insertClientData($data, $conn)
 {
     try {
         $id_agent = 1;
 
+        // Insert into `clients` table
         $sql = "INSERT INTO clintes (reference_dos, first_name, last_name, phone, email, CIN, CG, IMG_CIN, IMG_CIN_VERSO, IMG_GC, IMG_GC_VERSO, IMG_VIN, IMG_VIN_VERSO)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $sql1 = "INSERT INTO dossiers (reference, progress, date_creation, id_agent, charts) VALUES (?, ?, ?, ?, ?)";
+
+        // Insert into `dossiers` table with `accident_date`
+        $sql1 = "INSERT INTO dossiers (reference, date_expertise, id_agent, charts, date_accident) VALUES (?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($sql);
         $stmt1 = $conn->prepare($sql1);
@@ -108,6 +122,7 @@ function insertClientData($data, $conn)
 
         $charts = date("m/y");
 
+        // Bind parameters for `clients` table
         $stmt->bind_param(
             'sssssssssssss',
             $data['referance'],
@@ -117,7 +132,6 @@ function insertClientData($data, $conn)
             $data['email'],
             $data['cin_number'],
             $data['card_grise_number'],
-            // $data['date_permis'],
             $data['cin_img_recto_path'],
             $data['cin_img_verso_path'],
             $data['card_grise_img_recto_path'],
@@ -126,20 +140,23 @@ function insertClientData($data, $conn)
             $data['VIN_img_verso_path']
         );
 
-        $progress = 20;
+        // Bind parameters for `dossiers` table
         $stmt1->bind_param(
-            'sssis',
+            'ssiss',
             $data['referance'],
-            $progress,
-            $data['date_creation'],
+            // $progress,
+            $data['date_expertise'],
             $id_agent,
-            $charts
+            $charts,
+            $data['accident_date'] // New accident_date parameter
         );
 
+        // Execute `clients` insert
         if (!$stmt->execute()) {
             throw new Exception("Execution failed for clients: " . $stmt->error);
         }
 
+        // Execute `dossiers` insert
         if (!$stmt1->execute()) {
             throw new Exception("Execution failed for dossiers: " . $stmt1->error);
         }
@@ -155,10 +172,11 @@ function insertClientData($data, $conn)
     }
 }
 
+
 function cleanUpFilesAndDirectories($result)
 {
-    if (is_dir($result['referance'])) {
-        deleteDirectory($result['referance']);
+    if (is_dir("../../Stock/documents/F" . $result['referance'])) {
+        deleteDirectory("../../Stock/documents/F" . $result['referance']);
     }
 
     $uploaded_files = [
@@ -166,8 +184,8 @@ function cleanUpFilesAndDirectories($result)
         $result['cin_img_verso_path'],
         $result['card_grise_img_recto_path'],
         $result['card_grise_img_verso_path'],
-        $result['permis_img_recto_path'],
-        $result['permis_img_verso_path']
+        $result['VIN_img_recto_path'],
+        $result['VIN_img_verso_path']
     ];
 
     foreach ($uploaded_files as $file) {

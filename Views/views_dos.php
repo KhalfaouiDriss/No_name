@@ -34,15 +34,15 @@
                         </tfoot>
                         <tbody>
                             <?php
-                            // Query to get the last 50 entries sorted by date_creation
-                            $dossiers_encoure_query = "SELECT * FROM dossiers WHERE statut != 'complet' AND progress >= 0 ORDER BY -date_creation";
+                            // Query to get the last 50 entries sorted by date_expertise
+                            $dossiers_encoure_query = "SELECT * FROM dossiers WHERE statut != 'complet' AND progress >= 0 ORDER BY -date_expertise";
                             $dossiers_encoure_queryresult = mysqli_query($conn, $dossiers_encoure_query);
                             $dossiers_encoure_rows = mysqli_fetch_all($dossiers_encoure_queryresult, MYSQLI_ASSOC);
 
                             foreach ($dossiers_encoure_rows as $row): ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['reference']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['date_creation']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['date_expertise']); ?></td>
                                     <td>
                                         <span class="badge"
                                             style="background-color: <?php echo getStatusColor($row['statut']); ?>;">
